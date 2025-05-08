@@ -1,0 +1,131 @@
+.login-container {
+    display: flex;
+    height: 100vh;
+}
+
+.login-left {
+    background-color: #A6D785;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    width: 200px;
+}
+
+.welcome p {
+    font-family: 'Mallanna';
+    font-weight: 400;
+    font-size: 16px;
+    margin-top: -30px;
+    color: #999696;
+   
+}
+
+.login-right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 50px;
+}
+
+.login-right p {
+    font-family: 'Mallanna';
+    font-weight: 400;
+    font-size: 16px;
+
+    color: #999696;
+}
+
+.register-text {
+    display: block;
+    text-align: center;
+}
+
+.register-link {
+    text-decoration: none;
+    color:#A6D785;
+    font-weight: bold;
+  }
+  
+  .register-link:hover {
+    text-decoration: underline;
+  }
+  
+
+h2 {
+    font-size: 28px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: -20px;
+    margin-bottom: 30px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.forgotpassword-text {
+    display: flex;
+    justify-content: flex-end; /* Memindahkan teks ke kanan */
+    font-size: 14px;
+    margin-top: -40px;
+}
+
+.forgotpassword-link {
+    color: #999696;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.forgotpassword-link:hover {
+    text-decoration: underline;
+}
+
+.login-button {
+    background-color: #A6D785;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: 'Montserrat';
+    font-weight: 600;
+}
+
+.login-button:hover {
+    background-color: #8BBF63;
+}
+.guest-text {
+    color: #999696;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.guest-text:hover {
+    color: #297033;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.success-message {
+    color: green;
+    background-color: #e0ffe0;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
