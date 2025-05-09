@@ -64,83 +64,87 @@ function ChatHistorySidebar(props) {
         {user && (!conversations || conversations.length === 0) ? (
           <div className="no-conversations">Belum ada percakapan</div>
         ) : (
-          conversations.map((conversation) => {
-            if (!conversation || !conversation._id) return null;
+          conversations
+            .slice()
+            .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)) // atau createdAt
+            .map((conversation) => {
+              if (!conversation || !conversation._id) return null;
 
-            return (
-              <div
-                key={conversation._id}
-                className={`conversation-item ${
-                  conversation._id === selectedConversationId ? "active" : ""
-                }`}
-                onClick={() => onSelectConversation(conversation._id)}
-              >
-                {editingTitle === conversation._id ? (
-                  <div className="edit-title-container">
-                    <input
-                      type="text"
-                      value={newTitle}
-                      onChange={(e) => setNewTitle(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          handleSaveTitle(conversation._id);
-                        }
-                      }}
-                      placeholder="Edit judul percakapan"
-                    />
-                  </div>
-                ) : (
-                  <div className="conversation-title-wrapper">
-                    <span className="conversation-title">
-                      {conversation.title || "Percakapan Baru"}
-                    </span>
-
-                    <div
-                      className="menu-wrapper"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <button
-                        className="menu-toggle"
-                        onClick={() =>
-                          setActiveMenu(
-                            activeMenu === conversation._id
-                              ? null
-                              : conversation._id
-                          )
-                        }
-                      >
-                        &#8942;
-                      </button>
-
-                      {activeMenu === conversation._id && (
-                        <div className="menu-dropdown">
-                          <button
-                            className="menu-item"
-                            onClick={() =>
-                              handleEditTitle(
-                                conversation._id,
-                                conversation.title
-                              )
-                            }
-                          >
-                            <FaEdit style={{ marginRight: "8px" }} /> Edit Judul
-                          </button>
-                          <button
-                            className="menu-item delete"
-                            onClick={() =>
-                              handleConversationDelete(conversation._id)
-                            }
-                          >
-                            <FaTrash style={{ marginRight: "8px" }} /> Hapus
-                          </button>
-                        </div>
-                      )}
+              return (
+                <div
+                  key={conversation._id}
+                  className={`conversation-item ${
+                    conversation._id === selectedConversationId ? "active" : ""
+                  }`}
+                  onClick={() => onSelectConversation(conversation._id)}
+                >
+                  {editingTitle === conversation._id ? (
+                    <div className="edit-title-container">
+                      <input
+                        type="text"
+                        value={newTitle}
+                        onChange={(e) => setNewTitle(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            handleSaveTitle(conversation._id);
+                          }
+                        }}
+                        placeholder="Edit judul percakapan"
+                      />
                     </div>
-                  </div>
-                )}
-              </div>
-            );
-          })
+                  ) : (
+                    <div className="conversation-title-wrapper">
+                      <span className="conversation-title">
+                        {conversation.title || "Percakapan Baru"}
+                      </span>
+
+                      <div
+                        className="menu-wrapper"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <button
+                          className="menu-toggle"
+                          onClick={() =>
+                            setActiveMenu(
+                              activeMenu === conversation._id
+                                ? null
+                                : conversation._id
+                            )
+                          }
+                        >
+                          &#8942;
+                        </button>
+
+                        {activeMenu === conversation._id && (
+                          <div className="menu-dropdown">
+                            <button
+                              className="menu-item"
+                              onClick={() =>
+                                handleEditTitle(
+                                  conversation._id,
+                                  conversation.title
+                                )
+                              }
+                            >
+                              <FaEdit style={{ marginRight: "8px" }} /> Edit
+                              Judul
+                            </button>
+                            <button
+                              className="menu-item delete"
+                              onClick={() =>
+                                handleConversationDelete(conversation._id)
+                              }
+                            >
+                              <FaTrash style={{ marginRight: "8px" }} /> Hapus
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })
         )}
       </div>
     </div>
