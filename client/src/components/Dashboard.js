@@ -35,7 +35,7 @@ const Dashboard = () => {
 
       <div className="greeting-box">
         <h3>Selamat Datang {username}!</h3>
-        <p>Ready to start your day with some new lessons?</p>
+        <p>Jelajahi informasi keuangan khusus petani</p>
       </div>
       
       <div className="article-section">

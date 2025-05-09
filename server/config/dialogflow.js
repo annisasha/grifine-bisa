@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Mengambil kredensial JSON dari environment variable
+// Mengambil kredensial JSON dari env
 const credentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
 const sessionClient = new dialogflow.SessionsClient({
@@ -34,4 +34,4 @@ async function sendToDialogflow(sessionId, text) {
   return result;
 }
 
-export { sendToDialogflow }; // Ekspor fungsi untuk digunakan di chatController.js
+export { sendToDialogflow };

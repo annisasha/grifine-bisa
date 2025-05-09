@@ -19,14 +19,13 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(""); // Reset error
+    setError(""); 
   
-    console.log("Form data before login:", formData); // Log data sebelum login
+    console.log("Form data before login:", formData);
   
     try {
       await login(formData.email, formData.password);
       setSuccessMessage("Berhasil masuk!");
-      // Delay sebentar sebelum pindah halaman (opsional)
       setTimeout(() => {
         navigate("/dashboard");
       }, 1500);
@@ -74,17 +73,6 @@ const Login = () => {
             className="input-field"
             required
           />
-          <div className="remember-me">
-            <input type="checkbox" id="remember" />
-            <label htmlFor="remember">Ingat Akun</label>
-          </div>
-          <div className="forgotpassword-text">
-            <p>
-              <Link to="/ForgotPassword" className="forgotpassword-link">
-                Lupa Password?
-              </Link>
-            </p>
-          </div>
           <button type="submit" className="login-button">Masuk</button>
         </form>
         <div className="register-text">
