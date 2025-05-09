@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Mengambil kredensial JSON dari environment variable
-const credentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
+const credentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
 const sessionClient = new dialogflow.SessionsClient({
   credentials: {
