@@ -9,9 +9,14 @@ export const chatController = async (req, res) => {
   try {
     const dialogflowResponse = await sendToDialogflow(sessionId, message);
 
+    const botMessages = dialogflowResponse.messages.map((msg) => ({
+      sender: 'bot',
+      text: msg,
+      timestamp: new Date(),
+    }));
+
     if (req.userId) {
       if (conversationId) {
-        // Kalau ada conversationId, tambahkan pesan ke percakapan yang ada
         const conversation = await Conversation.findById(conversationId);
         if (conversation) {
           conversation.messages.push(
@@ -20,18 +25,13 @@ export const chatController = async (req, res) => {
               text: message,
               timestamp: new Date(),
             },
-            {
-              sender: 'bot',
-              text: dialogflowResponse.fulfillmentText,
-              timestamp: new Date(),
-            }
+            ...botMessages
           );
           await conversation.save();
         } else {
           return res.status(404).json({ error: 'Percakapan tidak ditemukan.' });
         }
       } else {
-        // Kalau tidak ada conversationId, buat percakapan baru
         await Conversation.create({
           userId: req.userId,
           title: 'Percakapan Baru',
@@ -41,17 +41,13 @@ export const chatController = async (req, res) => {
               text: message,
               timestamp: new Date(),
             },
-            {
-              sender: 'bot',
-              text: dialogflowResponse.fulfillmentText,
-              timestamp: new Date(),
-            },
+            ...botMessages
           ],
         });
       }
     }
 
-    res.json({ botResponse: dialogflowResponse.fulfillmentText });
+    res.json({ botResponse: dialogflowResponse.messages }); // kirim array ke frontend
   } catch (error) {
     console.error('Error handling chat:', error);
     res.status(500).json({ error: 'Terjadi kesalahan pada server.' });

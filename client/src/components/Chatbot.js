@@ -37,8 +37,10 @@ const Chatbot = ({
       // Kirim pesan berdasarkan status login
       if (isUserLoggedIn) {
         const response = await sendMessage(messageToSend, conversationId);
-        const botReply = { text: response.botResponse, sender: "bot" };
-        setMessages((prev) => [...prev, botReply]);
+        const botReplies = Array.isArray(response.botResponse)
+          ? response.botResponse.map((msg) => ({ text: msg, sender: "bot" }))
+          : [{ text: response.botResponse, sender: "bot" }];
+        setMessages((prev) => [...prev, ...botReplies]);
       } else {
         // Untuk user tamu, hanya kirim pesan tanpa menyimpan riwayat
         const response = await sendMessage(messageToSend);
@@ -69,7 +71,11 @@ const Chatbot = ({
   }, [conversationId]);
 
   return (
-    <div className={`chatbot-container ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
+    <div
+      className={`chatbot-container ${
+        isSidebarOpen ? "sidebar-open" : "sidebar-closed"
+      }`}
+    >
       {messages.length === 0 && (
         <>
           <h2 className="chatbot-title">Mau Tanya Apa Hari Ini?</h2>

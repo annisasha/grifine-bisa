@@ -31,7 +31,17 @@ async function sendToDialogflow(sessionId, text) {
 
   const responses = await sessionClient.detectIntent(request);
   const result = responses[0].queryResult;
-  return result;
+
+  // Ambil semua fulfillmentMessages (bisa lebih dari 1)
+  const messages = result.fulfillmentMessages
+    .map(msg => msg.text?.text?.[0]) // ambil isi teks
+    .filter(Boolean); // hilangkan yang undefined/null
+
+  return {
+    messages, // ← array of strings (semua balasan)
+    intent: result.intent.displayName,
+    confidence: result.intentDetectionConfidence
+  };
 }
 
 export { sendToDialogflow };

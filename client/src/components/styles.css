@@ -1,16 +1,4 @@
-/* Styling untuk Sidebar */
-/* .sidebar {
-    width: 230px;
-    min-width: 230px;
-    background: #c8e6c9;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 10px;
-  } */
-  
-  /* Tombol toggle */
+/* Tombol toggle */
 .toggle-button {
   position: fixed;
   top: 15px;
