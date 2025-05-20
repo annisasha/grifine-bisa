@@ -130,11 +130,14 @@ h2 {
   }
 
 .error-message  {
-    color: rgb(200, 58, 39);
-    background-color: #e0ffe0;
+    background-color: #eb2020;
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
     font-weight: bold;
   }
+
+.error-message {
+    color: white;
+}
   
