@@ -18,7 +18,7 @@
   width: 230px;
   min-width: 230px;
   background: #c8e6c9;
-  height: 100vh;
+  height: 95vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -424,7 +424,8 @@
   .chatbot-container {
     padding: 30px;
     text-align: center;
-    margin-top: -100px;
+    flex: 1;
+    margin-top: -60px;
   }
   
   /* Styling untuk judul chatbot */
@@ -551,9 +552,6 @@
   
   /* Kolom input saat SUDAH ada chat */
   .chat-input-container.with-margin {
-    position: fixed; 
-    bottom: 35px;
-    left: 35%;
     width: 100%;
   }
   

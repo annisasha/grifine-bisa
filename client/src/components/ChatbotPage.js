@@ -21,7 +21,10 @@ const ChatbotPage = () => {
     if (user) {
       getConversations()
         .then((response) => {
-          setConversations(response.data || []);
+          const sortedData = (response.data || []).sort(
+            (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+          );
+          setConversations(sortedData);
           if (response.data && response.data.length > 0) {
             const firstId = response.data[0]._id;
             setConversationId(firstId);
@@ -51,7 +54,7 @@ const ChatbotPage = () => {
         const mappedMessages = rawMessages.map((msg) => ({
           sender: msg.sender,
           text: msg.text,
-        }));        
+        }));
         setMessages(mappedMessages);
       })
       .catch((error) => {
@@ -59,32 +62,35 @@ const ChatbotPage = () => {
       });
   };
 
-const fetchConversations = async () => {
-  const response = await getConversations();
-  setConversations(response.data || []);
-};
+  const fetchConversations = async () => {
+    const response = await getConversations();
+    const sortedData = (response.data || []).sort(
+      (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+    );
+    setConversations(sortedData);
+  };
 
-const handleCreateConversation = async () => {
-  try {
-    const response = await createConversation(); // buat percakapan
-    const newConversation = response.data;
-    await fetchConversations(); // ⬅️ Tambahkan ini untuk update sidebar
-    handleConversationSelected(newConversation._id); // pindah ke percakapan baru
-  } catch (error) {
-    console.error("Gagal membuat percakapan:", error);
-  }
-};
+  const handleCreateConversation = async () => {
+    try {
+      const response = await createConversation(); // buat percakapan
+      const newConversation = response.data;
+      await fetchConversations(); // ⬅️ Tambahkan ini untuk update sidebar
+      handleConversationSelected(newConversation._id); // pindah ke percakapan baru
+    } catch (error) {
+      console.error("Gagal membuat percakapan:", error);
+    }
+  };
 
   return (
     <div className="chatbot-layout">
       {user && !user.guest && (
         <ChatHistorySidebar
-        conversations={conversations}
-        onSelectConversation={handleConversationSelected}
-        onCreateConversation={handleCreateConversation}
-        selectedConversationId={conversationId}
-        refreshConversations={fetchConversations}
-      />      
+          conversations={conversations}
+          onSelectConversation={handleConversationSelected}
+          onCreateConversation={handleCreateConversation}
+          selectedConversationId={conversationId}
+          refreshConversations={fetchConversations}
+        />
       )}
       <Chatbot
         setMessages={setMessages}
@@ -95,7 +101,7 @@ const handleCreateConversation = async () => {
         setInput={setInput}
         conversationId={conversationId}
         isUserLoggedIn={!!user}
-        refreshConversations={fetchConversations} 
+        refreshConversations={fetchConversations}
       />
     </div>
   );
