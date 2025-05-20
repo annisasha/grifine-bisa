@@ -69,7 +69,7 @@
 }
 
 .conversation-item.active {
-  background-color: #e9eaeb;
+  border: #5d9860;
 }
 
 /* === JUDUL PERCAPAKAN === */
