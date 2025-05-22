@@ -96,7 +96,9 @@ const Chatbot = ({
       <div className="chatbox" ref={chatboxRef}>
         {messages.map((msg, i) => (
           <div key={i} className={`chat-message ${msg.sender}`}>
-            {msg.text}
+            {msg.sender === "bot"
+              ? msg.text.split("\n").map((line, idx) => <p key={idx}>{line}</p>)
+              : msg.text}
           </div>
         ))}
         {isLoading && (
