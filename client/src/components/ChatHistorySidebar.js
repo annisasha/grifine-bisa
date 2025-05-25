@@ -6,9 +6,8 @@ import {
 import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 import { useAuth } from "../contexts/AuthContext";
 import "./ChatHistorySidebar.css";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-dayjs.extend(relativeTime);
+import { formatRelative, isToday, isYesterday } from "date-fns";
+import { id } from "date-fns/locale";
 
 function ChatHistorySidebar(props) {
   const {
@@ -54,17 +53,11 @@ function ChatHistorySidebar(props) {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  const formatLastUpdated = (updatedAt) => {
-    const now = dayjs();
-    const updated = dayjs(updatedAt);
-
-    if (updated.isSame(now, "day")) {
-      return "Hari ini";
-    } else if (updated.isSame(now.subtract(1, "day"), "day")) {
-      return "Kemarin";
-    } else {
-      return updated.fromNow();
-    }
+  const formatUpdatedAt = (date) => {
+    const d = new Date(date);
+    if (isToday(d)) return "Hari ini";
+    if (isYesterday(d)) return "Kemarin";
+    return formatRelative(d, new Date(), { locale: id });
   };
 
   return (
@@ -106,16 +99,17 @@ function ChatHistorySidebar(props) {
                           }
                         }}
                         placeholder="Edit judul percakapan"
+                        autoFocus
                       />
                     </div>
                   ) : (
                     <div className="conversation-title-wrapper">
                       <div className="conversation-title-block">
+                        <span className="conversation-updated">
+                          {formatUpdatedAt(conversation.updatedAt)}
+                        </span>
                         <span className="conversation-title">
                           {conversation.title || "Percakapan Baru"}
-                        </span>
-                        <span className="conversation-updated">
-                          {formatLastUpdated(conversation.updatedAt)}
                         </span>
                       </div>
 

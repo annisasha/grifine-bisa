@@ -13,7 +13,7 @@ export const register = async (req, res) => {
     await newUser.save();
 
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "5h",
     });
     res.status(201).json({ message: "Registrasi berhasil", user: newUser, token });
   } catch (err) {
