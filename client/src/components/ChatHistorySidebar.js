@@ -6,6 +6,9 @@ import {
 import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 import { useAuth } from "../contexts/AuthContext";
 import "./ChatHistorySidebar.css";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
 function ChatHistorySidebar(props) {
   const {
@@ -51,6 +54,19 @@ function ChatHistorySidebar(props) {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
+  const formatLastUpdated = (updatedAt) => {
+    const now = dayjs();
+    const updated = dayjs(updatedAt);
+
+    if (updated.isSame(now, "day")) {
+      return "Hari ini";
+    } else if (updated.isSame(now.subtract(1, "day"), "day")) {
+      return "Kemarin";
+    } else {
+      return updated.fromNow();
+    }
+  };
+
   return (
     <div className="chathistory-sidebar">
       <div className="sidebar-header">
@@ -66,7 +82,7 @@ function ChatHistorySidebar(props) {
         ) : (
           conversations
             .slice()
-            .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)) // atau createdAt
+            .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
             .map((conversation) => {
               if (!conversation || !conversation._id) return null;
 
@@ -94,9 +110,14 @@ function ChatHistorySidebar(props) {
                     </div>
                   ) : (
                     <div className="conversation-title-wrapper">
-                      <span className="conversation-title">
-                        {conversation.title || "Percakapan Baru"}
-                      </span>
+                      <div className="conversation-title-block">
+                        <span className="conversation-title">
+                          {conversation.title || "Percakapan Baru"}
+                        </span>
+                        <span className="conversation-updated">
+                          {formatLastUpdated(conversation.updatedAt)}
+                        </span>
+                      </div>
 
                       <div
                         className="menu-wrapper"
